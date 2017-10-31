@@ -98,7 +98,7 @@
             </table>
           </div>
 
-        <p><a class="btn btn-primary btn-lg" href="update" role="button">Enter Progress &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="<?php echo base_url('index.php/update') ?>" role="button">Enter Progress &raquo;</a></p>
         </main>
         <hr>
 

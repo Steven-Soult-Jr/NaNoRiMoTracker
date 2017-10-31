@@ -4,7 +4,7 @@ class Database_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
-        //$this->load->database(); //Database is currently broken. Trying to fix.
+        $this->load->database(); //Database is currently broken. Trying to fix.
         $this->load->helper('date');
     }
     
