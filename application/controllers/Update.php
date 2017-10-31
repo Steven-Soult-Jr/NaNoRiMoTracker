@@ -8,6 +8,8 @@ class Update extends CI_Controller {
 
         //The constructor is used to load the url helper on all pages.
         $this->load->helper('url');
+        $this->load->helper('form');
+        $this->load->model('Database_model');
     }
 
     public function index() {
