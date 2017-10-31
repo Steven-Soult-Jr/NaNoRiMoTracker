@@ -1,25 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
-
-    <title>National Novel Writing Month 2017</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../../assets/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="jumbotron.css" rel="stylesheet">
-  </head>
-
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -119,22 +98,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </table>
           </div>
 
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Enter Progress &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="update" role="button">Enter Progress &raquo;</a></p>
         </main>
         <hr>
 
       </div> <!-- /container -->
 
     </main>
-
-    <footer class="container">
-      <p>&copy; Steven 2017</p>
-    </footer>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../../assets/js/jquery-3.2.1.js"></script>
-    <script src="../../assets/js/bootstrap.js"></script>
-  </body>
-</html>
