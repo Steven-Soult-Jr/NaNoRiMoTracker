@@ -45,54 +45,65 @@
               <thead>
                 <tr>
                   <th>Week</th>
-                  <th>Name</th>
-                  <th>Name</th>
-                  <th>Name</th>
-                  <th>Name</th>
+                  <th>Steve</th>
+                  <th>Susanne</th>
+                  <th>Michelle</th>
+                  <th>Trevor</th>
+                  <th>Katherine</th>
+                  <th>Greg</th>
+                  <th>Steven</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>Week1</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
+                  <td><?php echo $Steve1 ?></td>
+                  <td><?php echo $Susanne1 ?></td>
+                  <td><?php echo $Michelle1 ?></td>
+                  <td><?php echo $Trevor1 ?></td>
+                  <td><?php echo $Katherine1 ?></td>
+                  <td><?php echo $Greg1 ?></td>
+                  <td><?php echo $Steven1 ?></td>
                 </tr>
                 <tr>
                   <td>Week2</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
+                  <td><?php echo $Steve2 ?></td>
+                  <td><?php echo $Susanne2 ?></td>
+                  <td><?php echo $Michelle2 ?></td>
+                  <td><?php echo $Trevor2 ?></td>
+                  <td><?php echo $Katherine2 ?></td>
+                  <td><?php echo $Greg2 ?></td>
+                  <td><?php echo $Steven2 ?></td>
                 </tr>
                 <tr>
                   <td>Week3</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
+                  <td><?php echo $Steve3 ?></td>
+                  <td><?php echo $Susanne3 ?></td>
+                  <td><?php echo $Michelle3 ?></td>
+                  <td><?php echo $Trevor3 ?></td>
+                  <td><?php echo $Katherine3 ?></td>
+                  <td><?php echo $Greg3 ?></td>
+                  <td><?php echo $Steven3 ?></td>
                 </tr>
                 <tr>
                   <td>Week4</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
+                  <td><?php echo $Steve4 ?></td>
+                  <td><?php echo $Susanne4 ?></td>
+                  <td><?php echo $Michelle4 ?></td>
+                  <td><?php echo $Trevor4 ?></td>
+                  <td><?php echo $Katherine4 ?></td>
+                  <td><?php echo $Greg4 ?></td>
+                  <td><?php echo $Steven4 ?></td>
                 </tr>
                 <tr>
                   <td>Week5</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <td>Totals</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
+                  <td><?php echo $Steve5 ?></td>
+                  <td><?php echo $Susanne5 ?></td>
+                  <td><?php echo $Michelle5 ?></td>
+                  <td><?php echo $Trevor5 ?></td>
+                  <td><?php echo $Katherine5 ?></td>
+                  <td><?php echo $Greg5 ?></td>
+                  <td><?php echo $Steven5 ?></td>
                 </tr>
               </tbody>
             </table>

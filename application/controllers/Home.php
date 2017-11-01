@@ -8,12 +8,14 @@ class Home extends CI_Controller {
 
         //The constructor is used to load the url helper on all pages.
         $this->load->helper('url');
+        $this->load->model('Database_model');
     }
 
     public function index() {
+        $data = $this->Database_model->getData();
         $title = array('title' => 'National Novel Writing Month 2017');
         $this->load->view('header', $title);
-        $this->load->view('home_view');
+        $this->load->view('home_view', $data);
         $this->load->view('footer');
     }
 
