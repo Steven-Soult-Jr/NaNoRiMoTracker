@@ -44,7 +44,6 @@ if (isset($submitted)): ?>
         <option value="Steve">Steve Sr.</option>
         <option value="Susanne">Susanne</option>
         <option value="Michelle">Michelle</option>
-        <option value="Trevor">Trevor</option>
         <option value="Katherine">Katherine</option>
         <option value="Greg">Greg</option>
         <option value="Steven">Steven Jr.</option>
