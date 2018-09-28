@@ -26,7 +26,7 @@ class Update extends CI_Controller {
             'wordcount' => $this->input->post('wordcount'),
             'submitted' => 1
                 );
-        
+				
         $this->Database_model->update(element('user',$data), element('wordcount', $data));
         
         $title = array('title' => 'Word Count Submitted!');
