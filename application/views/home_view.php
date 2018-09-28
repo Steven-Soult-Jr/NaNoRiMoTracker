@@ -4,8 +4,8 @@
 		google.charts.setOnLoadCallback(drawChart);
 		
 		function drawChart() {
-			var data = google.visualization.arrayToDataTable(<?php echo $values; ?>);
-			var options = { title: 'Word Count', curveType: 'function', legend: { position: 'bottom' } };
+			var data = google.visualization.arrayToDataTable(<?php echo json_encode($values); ?>);
+			var options = { title: 'Word Count', curveType: 'function', legend: { position: 'bottom' }, hAxis: {title: 'Date'} };
 			var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 			chart.draw(data, options);
 		}
@@ -43,17 +43,25 @@
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <div class="container">
-          <h1 class="display-3">Welcome to NaNoWriMo 2017!</h1>
-          <p>This is the tracking page for family progress toward our NaNoWriMo 2017 goals.</p>
-          <p><a class="btn btn-primary btn-lg" href="https://nanowrimo.org/" role="button">Learn more &raquo;</a></p>
+          <h1 class="display-3">Welcome to the NaNoWriMo Tracker!</h1>
+          <p>This is the tracking page for family progress toward our NaNoWriMo goals.</p>
+          <a class="btn btn-primary btn-lg" href="https://nanowrimo.org/" role="button">Learn more &raquo;</a>
+		  <a class="btn btn-primary btn-lg" href="<?php echo base_url('index.php/update') ?>" role="button">Enter Progress &raquo;</a>
         </div>
       </div>
 
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          <h1>Dashboard</h1>
-		  
-		  <p><a class="btn btn-primary btn-lg" href="<?php echo base_url('index.php/update') ?>" role="button">Enter Progress &raquo;</a></p>
-
+			
+			<div class="dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Select Year
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="<?php echo base_url('index.php/home') ?>">2017</a>
+					<a class="dropdown-item" href="<?php echo base_url('index.php/home/2018') ?>">2018</a>
+				</div>
+			</div>
+		
           <div id="curve_chart" style="width: 900px; height: 500px"></div>
 		  
 		  </main>

@@ -11,12 +11,14 @@ class Home extends CI_Controller {
         $this->load->model('Database_model');
     }
 
-    public function index() {
-        $data = $this->Database_model->getData();
+    public function index($year = NULL) {
+        $data = $this->Database_model->getData($year);
+		$data['year'] = $year;
         $title = array('title' => 'National Novel Writing Month 2017');
         $this->load->view('header', $title);
         $this->load->view('home_view', $data);
         $this->load->view('footer');
     }
-
+	
+	
 }

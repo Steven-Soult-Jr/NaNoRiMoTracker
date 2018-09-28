@@ -14,7 +14,7 @@ class Database_model extends CI_Model {
         $data = array(
             'username' => $user,
             'wordcount' => $wordcount,
-            'date' => date("md")
+            'date' => date("ymd")
         );
         $this->db->where('username', element('username', $data));
         $this->db->where('date', element('date', $data));
@@ -28,26 +28,39 @@ class Database_model extends CI_Model {
         }
     }
     
-    public function getData() {
-        
-        $query = $this->db->query("SELECT * FROM words WHERE username IN ('Steve', 'Steven') ORDER BY date ASC");
-		$data['values'] = [[]]);
-		$data['values'][] = ['Date', 'Steve', 'Steven'];
+    public function getData($year) {
+        if(isset($year)) {
+			$query = $this->db->query("SELECT * FROM words WHERE username IN ('Steve', 'Steven') AND date > 1101".$year." AND date < 1031".((int)$year+1)." ORDER BY date ASC");
+		} else {
+			$query = $this->db->query("SELECT * FROM words WHERE username IN ('Steve', 'Steven') ORDER BY date ASC");
+		}
+		$data['values'] = [['Date', 'Steve', 'Steven']];
 		$arraymap = ['Steve' => 1, 'Steven' => 2];
+		$numWriters = 2;
 		foreach($query->result() as $row) {
 			$found = false;
-			for($data as $i => $value) {
-				if ($value[0] == (string)$row->date) {
-					$value[$arraymap[$row->username]] = max($value[$arraymap[$row->username]], $row->words);
+			$date = $row->date;
+			$date = DateTime::createFromFormat('ymd', $date)->format('m/d/y');
+			foreach($data as $i => $value) {
+				if ($value[0] == (string)$date) {
+					$value[$arraymap[$row->username]] = max($value[$arraymap[$row->username]], $row->wordcount);
 					$found = true;
 					break;
 				}
 			}
 			if(!$found) {
 				$temparray = ['0', 0, 0];
-				$temparray[0] = (string)$row->date;
-				$temparray[$arraymap[$row->username]] = $row->words;
+				$temparray[0] = (string)$date;
+				$temparray[$arraymap[$row->username]] = $row->wordcount;
 				$data['values'][] = $temparray;
+			}
+		}
+		
+		for($i = 1; $i < count($data['values'])-1; $i++) {
+			for($j = 1; $j < $numWriters+1; $j++) {
+				if($data['values'][$i+1][$j] == 0) {
+					$data['values'][$i+1][$j] = $data['values'][$i][$j];
+				}
 			}
 		}
 		
