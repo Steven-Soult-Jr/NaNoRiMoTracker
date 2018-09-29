@@ -30,13 +30,13 @@ class Database_model extends CI_Model {
     
     public function getData($year) {
         if(isset($year)) {
-			$query = $this->db->query("SELECT * FROM words WHERE username IN ('Steve', 'Steven') AND date > 1101".$year." AND date < 1031".((int)$year+1)." ORDER BY date ASC");
+			$query = $this->db->query("SELECT * FROM words WHERE  date > 1101".$year." AND date < 1031".((int)$year+1)." ORDER BY date ASC");
 		} else {
-			$query = $this->db->query("SELECT * FROM words WHERE username IN ('Steve', 'Steven') ORDER BY date ASC");
+			$query = $this->db->query("SELECT * FROM words ORDER BY date ASC");
 		}
-		$data['values'] = [['Date', 'Steve', 'Steven']];
-		$arraymap = ['Steve' => 1, 'Steven' => 2];
-		$numWriters = 2;
+		$data['values'] = [['Date', 'Steve', 'Susanne', 'Michelle', 'Trevor', 'Katherine', 'Greg', 'Steven', 'Tamarah']];
+		$arraymap = ['Steve' => 1, 'Susanne' => 2, 'Michelle' => 3, 'Trevor' => 4, 'Katherine' => 5, 'Greg' => 6, 'Steven' => 7, 'Tamarah' => 8];
+		$numWriters = 8;
 		foreach($query->result() as $row) {
 			$found = false;
 			$date = $row->date;
@@ -49,7 +49,7 @@ class Database_model extends CI_Model {
 				}
 			}
 			if(!$found) {
-				$temparray = ['0', 0, 0];
+				$temparray = ['0', 0, 0, 0, 0, 0, 0, 0, 0];
 				$temparray[0] = (string)$date;
 				$temparray[$arraymap[$row->username]] = $row->wordcount;
 				$data['values'][] = $temparray;
