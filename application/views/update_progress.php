@@ -28,39 +28,47 @@
 
 
 <div class="jumbotron">
+<?php if(isset($writer)):
+	if(isset($submitted)): ?>
+		<h3>Your word count has been updated to <?php echo $wordcount ?>, <?php echo $writer ?>!</h3>
+		<p><a class="btn btn-primary btn-lg" href="<?php echo base_url('home') ?>" role="button">Home &raquo;</a></p>
+	<?php else:
+		echo validation_errors();
+		echo form_open('update/submit');
+		?>
+		<h5>Please enter your current word count, <?php echo $writer; ?>.</h5>
+		<input type="hidden" name="writer" value="<?php echo $writer; ?>">
+		<input type="number" name="wordcount" min="0" required>
+		<div><input type="submit" value="Submit" /></div>
+		<?php echo form_close();
+		if(isset($numBooks)): ?>
+		
+			<table class="table table-dark">
+				<tr><th>Book Name</th><th>Book Description</th><th>Words</th><th>Research/Other Words</th></tr>
+				<?php for($i = 0; $i < $numBooks; $i++): ?>
+					<tr><td><?php echo $books[$i]['bookname']; ?></td><td><?php echo $books[$i]['bookdesc']; ?></td><td><?php echo $books[$i]['words']; ?></td><td><?php echo $books[$i]['extrawords']; ?></td></tr>
+				<?php endfor; ?>
+			</table>
+	<?php endif;
+	endif;
+
+	else: ?>
     <div class="container">
-
-<?php
-if (isset($submitted)): ?>
-<h3>Your word count has been updated to <?php echo $wordcount ?>, <?php echo $user ?>!</h3>
-
-<p><a class="btn btn-primary btn-lg" href="<?php echo base_url('home') ?>" role="button">Home &raquo;</a></p>
-<?php else:
-    echo validation_errors();
-
-    echo form_open('update/submit');
-    ?>
-
-    <h5>User</h5>
-    <select name="user" required>
-        <option disabled selected value>Choose User...</option>
-        <option value="Steve">Steve Sr.</option>
-        <option value="Susanne">Susanne</option>
-        <option value="Michelle">Michelle</option>
-		<option value="Trevor">Trevor</option>
-        <option value="Katherine">Katherine</option>
-        <option value="Greg">Greg</option>
-        <option value="Steven">Steven Jr.</option>
-		<option value="Tamarah">Tamarah</option>
-    </select>
-
-    <h5>Current Word Count</h5>
-    <input type="number" name="wordcount" min="0" required>
-
-    <div><input type="submit" value="Submit" /></div>
-
-    <?php echo form_close(); ?>
-<?php endif; ?>
-
+		<div class="dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Select User
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="<?php echo base_url('update/user/Steve/'); ?>">Steve Sr.</a>
+					<a class="dropdown-item" href="<?php echo base_url('update/user/Susanne/'); ?>">Susanne</a>
+					<a class="dropdown-item" href="<?php echo base_url('update/user/Michelle/'); ?>">Michelle</a>
+					<a class="dropdown-item" href="<?php echo base_url('update/user/Trevor/'); ?>">Trevor</a>
+					<a class="dropdown-item" href="<?php echo base_url('update/user/Katherine/'); ?>">Katherine</a>
+					<a class="dropdown-item" href="<?php echo base_url('update/user/Greg/'); ?>">Greg</a>
+					<a class="dropdown-item" href="<?php echo base_url('update/user/Steven/'); ?>">Steven Jr.</a>
+					<a class="dropdown-item" href="<?php echo base_url('update/user/Tamarah/'); ?>">Tamarah</a>
+				</div>
+		</div>
     </div>
+<?php endif; ?>
 </div>
