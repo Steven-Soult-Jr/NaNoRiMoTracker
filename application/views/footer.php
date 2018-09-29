@@ -1,5 +1,5 @@
     <footer class="container">
-      <p>&copy; Steven 2017</p>
+	Last Updated 9/28/2018
     </footer>
 
     <!-- Bootstrap core JavaScript

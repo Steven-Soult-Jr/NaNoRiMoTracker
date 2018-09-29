@@ -30,7 +30,7 @@ class Database_model extends CI_Model {
     
     public function getData($year) {
         if(isset($year)) {
-			$query = $this->db->query("SELECT * FROM words WHERE  date > 1101".$year." AND date < 1031".((int)$year+1)." ORDER BY date ASC");
+			$query = $this->db->query("SELECT * FROM words WHERE  date > ".$year."1031 AND date < ".($year+1)."1101 ORDER BY date ASC");
 		} else {
 			$query = $this->db->query("SELECT * FROM words ORDER BY date ASC");
 		}
@@ -62,6 +62,10 @@ class Database_model extends CI_Model {
 					$data['values'][$i+1][$j] = $data['values'][$i][$j];
 				}
 			}
+		}
+		
+		if(!isset($data['values'][1])) {
+			$data['values'][1] = [$year."1101", 0, 0, 0, 0, 0, 0, 0, 0];
 		}
 		
 		return $data;

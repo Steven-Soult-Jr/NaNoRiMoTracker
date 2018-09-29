@@ -9,10 +9,10 @@
       <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="<?php echo base_url('index.php/home') ?>">Home<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="<?php echo base_url('home') ?>">Home<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('index.php/update') ?>">Track Progress</a>
+            <a class="nav-link" href="<?php echo base_url('update') ?>">Track Progress</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Inspiration</a>
@@ -34,7 +34,7 @@
 if (isset($submitted)): ?>
 <h3>Your word count has been updated to <?php echo $wordcount ?>, <?php echo $user ?>!</h3>
 
-<p><a class="btn btn-primary btn-lg" href="<?php echo base_url('index.php/home') ?>" role="button">Home &raquo;</a></p>
+<p><a class="btn btn-primary btn-lg" href="<?php echo base_url('home') ?>" role="button">Home &raquo;</a></p>
 <?php else:
     echo validation_errors();
 

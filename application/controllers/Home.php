@@ -9,9 +9,13 @@ class Home extends CI_Controller {
         //The constructor is used to load the url helper on all pages.
         $this->load->helper('url');
         $this->load->model('Database_model');
+		$this->load->model('Input_model');
     }
 
     public function index($year = NULL) {
+		if(isset($year)) {
+			$year = $this->Input_model->year($year);
+		}
         $data = $this->Database_model->getData($year);
 		$data['year'] = $year;
         $title = array('title' => 'National Novel Writing Month 2017');
