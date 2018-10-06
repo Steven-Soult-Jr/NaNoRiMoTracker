@@ -9,10 +9,10 @@
       <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="<?php echo base_url('home'); ?>">Home<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="<?php echo base_url('home') ?>">Home<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('update'); ?>">Track Progress</a>
+            <a class="nav-link" href="<?php echo base_url('update') ?>">Track Progress</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Inspiration</a>
@@ -30,7 +30,7 @@
 <div class="jumbotron">
 <?php if(isset($writer)):
 	if(isset($submitted)): ?>
-		<h3>Your word count has been updated to <?php echo $wordCount ?>, <?php echo $writer ?>!</h3>
+		<h3>Your word count has been updated to <?php echo $wordcount ?>, <?php echo $writer ?>!</h3>
 		<p><a class="btn btn-primary btn-lg" href="<?php echo base_url('home') ?>" role="button">Home &raquo;</a></p>
 	<?php else:
 		echo validation_errors();
@@ -38,15 +38,15 @@
 		?>
 		<h5>Please enter your current word count, <?php echo $writer; ?>.</h5>
 		<input type="hidden" name="writer" value="<?php echo $writer; ?>">
-		<input type="number" name="wordCount" min="0" required>
+		<input type="number" name="wordcount" min="0" required>
 		<div><input type="submit" value="Submit" /></div>
 		<?php echo form_close();
-		if($numBooks > 0): ?>
+		if(isset($numBooks)): ?>
 		
 			<table class="table table-dark">
 				<tr><th>Book Name</th><th>Book Description</th><th>Words</th><th>Research/Other Words</th></tr>
-				<?php for($i = $numBooks-1; $i >= 0; $i--): ?>
-					<tr><td><a href="<?php echo base_url(); ?>update/book/<?php echo $writer; ?>/<?php echo $books[$i]['bookNum']; ?>"><?php echo $books[$i]['bookName']; ?></a></td><td><?php echo $books[$i]['bookDesc']; ?></td><td><?php echo $books[$i]['wordCount']; ?></td><td><?php echo $books[$i]['extraWords']; ?></td></tr>
+				<?php for($i = 0; $i < $numBooks; $i++): ?>
+					<tr><td><?php echo $books[$i]['bookname']; ?></td><td><?php echo $books[$i]['bookdesc']; ?></td><td><?php echo $books[$i]['words']; ?></td><td><?php echo $books[$i]['extrawords']; ?></td></tr>
 				<?php endfor; ?>
 			</table>
 	<?php endif;

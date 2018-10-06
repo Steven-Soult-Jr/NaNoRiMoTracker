@@ -1,5 +1,5 @@
     <footer class="container">
-	Last Updated 9/28/2018
+	Site Last Updated 10/05/2018
     </footer>
 
     <!-- Bootstrap core JavaScript

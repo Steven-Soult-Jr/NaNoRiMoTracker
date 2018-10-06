@@ -5,7 +5,7 @@
 		
 		function drawChart() {
 			var data = google.visualization.arrayToDataTable(<?php echo json_encode($values); ?>);
-			var options = { title: 'Word Count', curveType: 'function', width: $(window).width()*0.75, legend: { position: 'bottom' }, hAxis: {title: 'Date'}, vAxis: {title: 'Words'} };
+			var options = { title: 'Word Count', curveType: 'function', width: $(window).width()*0.75, legend: { position: 'bottom' }, hAxis: {title: 'Date'}, vAxis: {title: 'Words', viewWindow: {min: 0}} };
 			var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 			chart.draw(data, options);
 		}
@@ -29,6 +29,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Inspiration</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
+			  <a class="dropdown-item" href="https://nanowrimo.org">NaNoWriMo Website</a>
               <a class="dropdown-item" href="https://www.forbes.com/sites/suwcharmananderson/2012/11/09/five-links-for-nanowrimo-inspiration/#2609766c2dc1">Forbes</a>
               <a class="dropdown-item" href="http://nanowrimoinspiration.tumblr.com/">Tumblr</a>
               <a class="dropdown-item" href="https://www.pinterest.com/maddi_dru/nanowrimo-inspiration/">Pinterest</a>
@@ -45,8 +46,7 @@
         <div class="container">
           <h1 class="display-3">Welcome to the NaNoWriMo Tracker!</h1>
           <p>This is the tracking page for family progress toward our NaNoWriMo goals.</p>
-          <a class="btn btn-primary btn-lg" href="https://nanowrimo.org/" role="button">Learn more &raquo;</a>
-		  <a class="btn btn-primary btn-lg" href="<?php echo base_url('update') ?>" role="button">Enter Progress &raquo;</a>
+		  <a class="btn btn-primary btn-lg" href="<?php echo base_url('update'); ?>" role="button">Enter Progress &raquo;</a>
         </div>
       </div>
 
@@ -56,8 +56,10 @@
 				Select Year
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="<?php echo base_url('home/2017/') ?>">2017</a>
-					<a class="dropdown-item" href="<?php echo base_url('home/2018/') ?>">2018</a>
+					<a class="dropdown-item" href="<?php echo base_url('home'); ?>">All</a>
+					<?php for($i = 2017; $i <= (int) date("Y"); $i++): ?>
+					<a class="dropdown-item" href="<?php echo base_url('home/').$i; ?>"><?php echo $i; ?></a>
+					<?php endfor; ?>
 				</div>
 			</div>
 			<?php if(isset($year)) {

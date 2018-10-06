@@ -6,81 +6,87 @@ class Database_model extends CI_Model {
         parent::__construct();
         $this->load->database();
         $this->load->helper('date');
-        $this->load->helper('array');
 		date_default_timezone_set('America/Los_Angeles');
     }
     
     public function update($writer, $wordcount){
-        $data = array(
-            'writer' => $writer,
-            'wordcount' => $wordcount,
-            'date' => date("ymd")
-        );
-        $this->db->where('writer', element('writer', $data));
-        $this->db->where('date', element('date', $data));
-        if($this->db->count_all_results() > 0) {
-            $this->db->where('writer', element('writer', $data));
-            $this->db->where('date', element('date', $data));
-            $this->db->delete('Words');
-            $this->db->insert('Words', $data);
+        $data['date'] = date('ymd');
+        $this->db->where('date', $data['date']);
+        if($this->db->count_all_results('Words') > 0) {
+            $this->db->where('date', $data['date']);
+			$this->db->set($writer, $wordcount);
+			$this->db->update('Words');
         } else {
+			$this->db->order_by('date', 'DESC');
+			$this->db->limit(1);
+			$query = $this->db->get('Words')->result_array()[0];
+			foreach($query as $key => $value) {
+				$data[$key] = $value;
+			}
+			$data['date'] = date('ymd');
+			$data[$writer] = $wordcount;
             $this->db->insert('Words', $data);
         }
     }
 	
     public function getData($year) {
         if(isset($year)) {
-			$query = $this->db->query("SELECT * FROM Words WHERE  date > ".$year."1031 AND date < ".($year+1)."1101 ORDER BY date ASC");
+			$this->db->where('date >', $year.'1031');
+			$this->db->where('date <', ($year+1).'1101');
+			$this->db->order_by('date');
+			$query = $this->db->get('Words')->result_array();
+			$this->db->where('date <', $year.'1101');
+			$this->db->order_by('date', 'DESC');
+			$this->db->limit(1);
+			$previous = $this->db->get('Words')->result_array();
+			if(isset($previous[0])) {
+				$previous = $previous[0];
+				unset($previous['date']);
+			} else {
+				unset($previous);
+			}
 		} else {
-			$query = $this->db->query("SELECT * FROM Words ORDER BY date ASC");
-		}
-		$data['values'] = [['Date', 'Steve', 'Susanne', 'Michelle', 'Trevor', 'Katherine', 'Greg', 'Steven', 'Tamarah']];
-		$arraymap = ['Steve' => 1, 'Susanne' => 2, 'Michelle' => 3, 'Trevor' => 4, 'Katherine' => 5, 'Greg' => 6, 'Steven' => 7, 'Tamarah' => 8];
-		$numWriters = 8;
-		foreach($query->result() as $row) {
-			$found = false;
-			$date = $row->date;
-			$date = DateTime::createFromFormat('ymd', $date)->format('m/d/y');
-			foreach($data as $i => $value) {
-				if ($value[0] == (string)$date) {
-					$value[$arraymap[$row->writer]] = max($value[$arraymap[$row->writer]], $row->wordcount);
-					$found = true;
-					break;
-				}
-			}
-			if(!$found) {
-				$temparray = ['0', 0, 0, 0, 0, 0, 0, 0, 0];
-				$temparray[0] = (string)$date;
-				$temparray[$arraymap[$row->writer]] = $row->wordcount;
-				$data['values'][] = $temparray;
-			}
+			$this->db->order_by('date');
+			$query = $this->db->get('Words')->result_array();
 		}
 		
-		for($i = 1; $i < count($data['values'])-1; $i++) {
-			for($j = 1; $j < $numWriters+1; $j++) {
-				if($data['values'][$i+1][$j] == 0) {
-					$data['values'][$i+1][$j] = $data['values'][$i][$j];
-				}
+		if(isset($query[0])) {
+			foreach($query[0] as $key => $array) {
+				$data['values'][0][] = $key;
 			}
-		}
-		
-		if(!isset($data['values'][1])) {
-			$data['values'][1] = [$year."1101", 0, 0, 0, 0, 0, 0, 0, 0];
+			foreach($query as $row) {
+				if(isset($previous)) {
+					foreach($previous as $key => $value) {
+						$row[$key] = max($row[$key]-$value, 0);
+					}
+				}
+				$row['date'] = (string)DateTime::createFromFormat('ymd', $row['date'])->format('m/d/y');
+				$data['values'][] = array_values($row);
+			}
+			
+		} else {
+			$data['values'][0] = ['date', 'No Data'];
+			$data['values'][1] = ['11/01/'.$year, 0];
+			$data['values'][2] = ['10/31/'.($year+1), 0];
 		}
 		
 		return $data;
     }
 	
-	public function getBooks($writer, $booknum = NULL) {
+	public function getBooks($writer, $bookNum = NULL) {
 		$numBooks = $this->numBooks($writer);
 		if($numBooks == 0) {
+			$data['numBooks'] = 0;
 			$data['writer'] = $writer;
 			return $data;
 		}
 		if(isset($booknum)) {
-			$query = $this->db->query("SELECT * FROM Books WHERE writer = '".$writer."' AND booknum = ".$booknum);
+			$this->db->where('writer', $writer);
+			$this->db->where('bookNum', $bookNum);
+			$query = $this->db->get('Books');
 		} else {
-			$query = $this->db->query("SELECT * FROM Books WHERE writer = '".$writer."'");
+			$this->db->where('writer', $writer);
+			$query = $this->db->get('Books');
 		}
 		$data['numBooks'] = $numBooks;
 		$data['writer'] = $writer;
@@ -88,8 +94,16 @@ class Database_model extends CI_Model {
 		return $data;
 	}
 	
+	public function getWriters() {
+		$this->db->select('writer');
+		return $this->db->get('Writers')->result_array();
+	}
+	
 	public function numBooks($writer) {
-		return $this->db->query("SELECT COUNT(*) as count FROM Books WHERE writer = '".$writer."'")->result_array()[0]['count'];
+		$this->db->select('numBooks');
+		$this->db->where('writer', $writer);
+		$results = $this->db->get('Writers')->result_array();
+		return $results[0]['numBooks'];
 	}
 	
 	public function updateBook($data) {
