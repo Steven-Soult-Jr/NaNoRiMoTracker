@@ -30,4 +30,8 @@ class Input_model extends CI_Model {
 		}
 		return 0;
 	}
+	
+	public function validBook($writer, $bookNum) {
+		
+	}
 }

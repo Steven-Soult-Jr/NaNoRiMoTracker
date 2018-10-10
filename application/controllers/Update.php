@@ -5,8 +5,7 @@ class Update extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-
-        //The constructor is used to load the url helper on all pages.
+		
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->model('Database_model');
@@ -20,13 +19,9 @@ class Update extends CI_Controller {
         $this->load->view('footer');
     }
 	
-	public function user($writer, $booknum = NULL) {
-		if(isset($booknum)) {
-			$booknum = $this->Input_model->isInt($booknum);
-		}
+	public function user($writer) {
 		$writer = $this->Input_model->writer($writer);
-		
-		$data = $this->Database_model->getBooks($writer, $booknum);
+		$data = $this->Database_model->getBooks($writer);
 		
 		$title['title'] = $writer."'s Progress";
 		$this->load->view('header', $title);
@@ -37,12 +32,16 @@ class Update extends CI_Controller {
     public function submit() {
         $data = array(
             'writer' => $this->Input_model->writer($this->input->post('writer')),
-            'wordCount' => $this->Input_model->isInt($this->input->post('wordCount')),
-            'submitted' => TRUE
+			'wordCount' => 0,
+			'submitted' => TRUE
                 );
-		
-		
-		
+		$numBooks = $this->Database_model->numBooks($data['writer']);
+		for($i = 1; $i <= $numBooks; $i++) {
+			$tempWords = $this->Input_model->isInt($this->input->post('words'.$i));
+			$tempExtra = $this->Input_model->isInt($this->input->post('extra'.$i));
+			$data['wordCount'] = $data['wordCount'] + $tempWords + $tempExtra;
+			$this->Database_model->bookWords($data['writer'], $i, $tempWords, $tempExtra);
+		}
         $this->Database_model->update($data['writer'], $data['wordCount']);
         
         $title = array('title' => 'Word Count Submitted!');

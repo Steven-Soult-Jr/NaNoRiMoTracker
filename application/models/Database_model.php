@@ -80,18 +80,28 @@ class Database_model extends CI_Model {
 			$data['writer'] = $writer;
 			return $data;
 		}
-		if(isset($booknum)) {
+		if(isset($bookNum)) {
 			$this->db->where('writer', $writer);
 			$this->db->where('bookNum', $bookNum);
 			$query = $this->db->get('Books');
 		} else {
 			$this->db->where('writer', $writer);
+			$this->db->order_by('bookNum', 'ASC');
 			$query = $this->db->get('Books');
 		}
 		$data['numBooks'] = $numBooks;
 		$data['writer'] = $writer;
 		$data['books'] = $query->result_array();
 		return $data;
+	}
+	
+	public function getAll() {
+		$this->db->order_by('writer', 'ASC');
+		$this->db->order_by('bookNum', 'ASC');
+		$data['books'] = $this->db->get('Books')->result_array();
+		$data['numBooks'] = count($data['books']);
+		return $data;
+		
 	}
 	
 	public function getWriters() {
@@ -106,7 +116,32 @@ class Database_model extends CI_Model {
 		return $results[0]['numBooks'];
 	}
 	
-	public function updateBook($data) {
-		
+	public function updateBook($values) {
+		if($values['bookNum'] > 0) {
+			$this->db->where('writer', $values['writer']);
+			$this->db->where('bookNum', $values['bookNum']);
+			$this->db->set('bookName', $values['bookName']);
+			$this->db->set('bookDesc', $values['bookDesc']);
+			$this->db->update('Books');
+			$data['bookNum'] = $values['bookNum'];
+		} else {
+			$data['bookNum'] = $this->numBooks($values['writer']) + 1;
+			$data['writer'] = $values['writer'];
+			$data['bookName'] = $values['bookName'];
+			$data['bookDesc'] = $values['bookDesc'];
+			$this->db->insert('Books', $data);
+			$this->db->where('writer', $values['writer']);
+			$this->db->set('numBooks', $data['bookNum']);
+			$this->db->update('Writers');
+		}
+		return $data['bookNum'];
+	}
+	
+	public function bookWords($writer, $bookNum, $wordCount, $extraWords) {
+		$this->db->where('writer', $writer);
+		$this->db->where('bookNum', $bookNum);
+		$this->db->set('wordCount', $wordCount);
+		$this->db->set('extraWords', $extraWords);
+		$this->db->update('Books');
 	}
 }

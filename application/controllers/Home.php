@@ -5,8 +5,7 @@ class Home extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-
-        //The constructor is used to load the url helper on all pages.
+		
         $this->load->helper('url');
         $this->load->model('Database_model');
 		$this->load->model('Input_model');
@@ -18,7 +17,7 @@ class Home extends CI_Controller {
 		}
         $data = $this->Database_model->getData($year);
 		$data['year'] = $year;
-        $title = array('title' => 'National Novel Writing Month 2017');
+        $title = array('title' => 'National Novel Writing Month Tracker');
         $this->load->view('header', $title);
         $this->load->view('home_view', $data);
         $this->load->view('footer');
